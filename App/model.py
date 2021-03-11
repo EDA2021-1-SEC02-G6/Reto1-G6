@@ -106,7 +106,7 @@ def requerimiento1(categoria, pais, n, catalog):
         if video2["country"] == pais:
             lt.addLast(lista2, video2)
     
-    ordenado=ordenarvistas(lista2
+    ordenado=ordenarvistas(lista2)
     final=lt.subList(ordenado, 0, n)
     return (final)
 
@@ -147,10 +147,10 @@ def comparechannel(channelname, channel):
 # Funciones de ordenamiento
 
 def ordenarvistas (videos):
-ordenado = sa.sort(videos["views"], compareratings)
-return (ordenado)
+    ordenado = sa.sort(videos["views"], compareratings)
+    return (ordenado)
 
 def ordenarfecha(videos):
     ordenado = sa.sort(videos["trending_date"], compareratings)
-return (ordenado)
+    return (ordenado)
 
