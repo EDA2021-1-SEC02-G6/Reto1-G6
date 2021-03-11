@@ -37,7 +37,57 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- Buscar los n videos con más views que son tendencia en un país para una categoria especifica")
+    print("3- Video que más días ha sido trending en un país")
+    print("0 - Salir")
+
+def initCatalog():
+    """
+    Inicializa el catalogo de libros
+    """
+    return controller.initCatalog()
+
+
+def loadData(catalog):
+    """
+    Carga los libros en la estructura de datos
+    """
+    controller.loadData(catalog)
+
+def PrimerVideo(catalog):
+
+    video = lt.firstElement(catalog['videos'])
+    print('Titulo: ' + str(video['title']))
+    print('Canal: ' + str(video['channel_title']))
+    print('Fecha de trending: ' + str(video['trending_date']))
+    print('País: ' + str(video['country']))
+    print('Vistas: ' + str(video['views']))
+    print('likes: ' + str(video['likes']))
+    print('dislikes: ' + str(video['dislikes']))
+
+def categories(catalog):
+    
+    categorias = catalog['categories']
+    for categoria in categorias:
+        print(categoria)
+
+def requerimiento1(lista):
+    for video in lista:
+        print('Fecha de trending: ' + str(video['trending_date']))
+        print('Titulo: ' + str(video['title']))
+        print('Canal: ' + str(video['channel_title']))
+        print('Timepo publicado: ' + str(video['publish_time']))
+        print('Vistas: ' + str(video['views']))
+        print('likes: ' + str(video['likes']))
+        print('dislikes: ' + str(video['dislikes']))
+
+def requerimiento2(mejor):
+    print('Titulo: ' + str(mejor['title']))
+    print('Canal: ' + str(mejor['channel_title']))
+    print('País: ' + str(mejor['country']))
+    
+
+    
 
 catalog = None
 
@@ -49,9 +99,31 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
+        catalog = initCatalog()
+        loadData(catalog)
+        print('Videos cargados: ' + str(lt.size(catalog['videos'])))
+        print("Información del primer video: ")
+        print("------------------------------")
+        PrimerVideo(catalog)
+        print("Categorias: ")
+        categories(catalog)
 
     elif int(inputs[0]) == 2:
-        pass
+        categoria = input("Introduzca la categoria: ")
+        pais = input("Introduzca el país: ")
+        n = input("número de videos que quiere listar: ")
+        categoria_id=controller.categorieid(categoria, catalog)
+        lista= controller.requerimiento1(categoria_id, pais, n, catalog)
+        requerimiento1(lista)
+        
+
+    elif int(inputs[0]) == 3:
+        pais = input("Introduzca el país: ")
+        mejor = controller.requerimiento2(catalog, pais)
+        requerimiento2(mejor[0])
+        print('Fecha de trending: ' + str(lista[1]))
+
+
 
     else:
         sys.exit(0)
